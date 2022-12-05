@@ -162,8 +162,6 @@ obj/
 
 # Legacy Eclipse project files
 .classpath
-.project
-.cproject
 .settings/
 
 # Mobile Tools for Java (J2ME)
