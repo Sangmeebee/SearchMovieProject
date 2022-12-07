@@ -9,5 +9,15 @@
         android:id="@+id/searchMovieFragment"
         android:name="com.sangmeebee.searchmovieproject.ui.screen.searchmovie.SearchMovieFragment"
         android:label="SearchMovieFragment"
-        tools:layout="@layout/fragment_search_movie" />
+        tools:layout="@layout/fragment_search_movie">
+        <action
+            android:id="@+id/action_searchMovieFragment_to_bookmarkedMovieFragment"
+            app:destination="@id/bookmarkedMovieFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/bookmarkedMovieFragment"
+        android:name="com.sangmeebee.searchmovieproject.ui.screen.bookmarkedmovie.BookmarkedMovieFragment"
+        android:label="BookmarkedMovieFragment"
+        tools:layout="@layout/fragment_bookmarked_movie" />
 </navigation>
