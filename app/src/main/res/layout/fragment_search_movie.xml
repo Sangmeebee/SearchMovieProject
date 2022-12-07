@@ -79,9 +79,9 @@
             layout="@layout/item_error"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="@{viewModel.errorState !=null ? View.VISIBLE : View.GONE}"
+            android:visibility="@{viewModel.uiState.errorMessage !=null ? View.VISIBLE : View.GONE}"
             app:layout_constraintTop_toBottomOf="@id/til_search_movie"
-            bind:errorMessage="@{viewModel.errorState}" />
+            bind:errorMessage="@{viewModel.uiState.errorMessage}" />
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/srl_loading"
@@ -96,7 +96,7 @@
                 android:layout_height="0dp"
                 android:orientation="vertical"
                 android:paddingHorizontal="20dp"
-                android:visibility="@{viewModel.errorState !=null ? View.INVISIBLE : View.VISIBLE}"
+                android:visibility="@{viewModel.uiState.errorMessage !=null ? View.INVISIBLE : View.VISIBLE}"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

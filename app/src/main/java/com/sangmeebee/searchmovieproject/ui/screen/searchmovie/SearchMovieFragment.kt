@@ -5,6 +5,7 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import com.sangmeebee.searchmovieproject.R
 import com.sangmeebee.searchmovieproject.const.DEBOUNCE_DURATION_MILLIS
@@ -22,7 +23,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.distinctUntilChangedBy
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -84,6 +87,7 @@ class SearchMovieFragment : BaseFragment<FragmentSearchMovieBinding>(FragmentSea
     private fun setUpObservable() {
         observeMovies()
         observeTextField()
+        setUpObserveUiState()
         observePagingRefresh()
     }
 
@@ -104,32 +108,56 @@ class SearchMovieFragment : BaseFragment<FragmentSearchMovieBinding>(FragmentSea
         }
     }
 
-    private fun observePagingRefresh() = lifecycleScope.launch {
-        movieAdapter.loadStateFlow
-            .distinctUntilChangedBy { it.refresh }
-            .collectLatest { loadStates ->
-                when (val refreshLoadState = loadStates.refresh) {
-                    is LoadState.Loading -> {
-                        binding.srlLoading.isRefreshing = true
-                    }
-                    is LoadState.Error -> {
-                        binding.srlLoading.isRefreshing = false
-                        checkErrorState(refreshLoadState.error)
-                    }
-                    is LoadState.NotLoading -> {
-                        binding.srlLoading.isRefreshing = false
-                        binding.rvMovies.scrollToPosition(0)
-                        searchMovieViewModel.fetchErrorState(null)
+    private fun setUpObserveUiState() {
+        observeIsLoading()
+        observeIsComplete()
+    }
+
+    private fun observeIsLoading() = repeatOnStarted {
+        searchMovieViewModel.uiState.map { it.isLoading }.distinctUntilChanged().collectLatest { isLoading ->
+            binding.srlLoading.isRefreshing = isLoading
+        }
+    }
+
+    private fun observeIsComplete() = repeatOnStarted {
+        searchMovieViewModel.uiState.map { it.isComplete }.distinctUntilChanged().collectLatest { isComplete ->
+            if (isComplete) {
+                binding.rvMovies.scrollToPosition(0)
+                searchMovieViewModel.fetchIsComplete(false)
+            }
+        }
+    }
+
+    private fun observePagingRefresh() {
+        repeatOnStarted {
+            movieAdapter.loadStateFlow
+                .distinctUntilChangedBy { it.refresh }
+                .collectLatest { loadStates ->
+                    when (val refreshLoadState = loadStates.refresh) {
+                        is LoadState.Loading -> {
+                            searchMovieViewModel.fetchIsLoading(true)
+                        }
+                        is LoadState.Error -> {
+                            searchMovieViewModel.fetchIsLoading(false)
+                            checkErrorState(refreshLoadState.error)
+                        }
+                        is LoadState.NotLoading -> {
+                            if (searchMovieViewModel.uiState.value.isLoading) {
+                                searchMovieViewModel.fetchIsComplete(true)
+                            }
+                            searchMovieViewModel.fetchErrorMessage(null)
+                            searchMovieViewModel.fetchIsLoading(false)
+                        }
                     }
                 }
-            }
+        }
     }
 
     private fun checkErrorState(throwable: Throwable) {
         when (throwable) {
-            is EmptyQueryException -> searchMovieViewModel.fetchErrorState(resources.getString(R.string.search_movie_empty_query))
-            is HttpConnectionException -> searchMovieViewModel.fetchErrorState(resources.getString(R.string.all_network_disconnect))
-            else -> searchMovieViewModel.fetchErrorState(resources.getString(R.string.all_unknown_error))
+            is EmptyQueryException -> searchMovieViewModel.fetchErrorMessage(resources.getString(R.string.search_movie_empty_query))
+            is HttpConnectionException -> searchMovieViewModel.fetchErrorMessage(resources.getString(R.string.all_network_disconnect))
+            else -> searchMovieViewModel.fetchErrorMessage(resources.getString(R.string.all_unknown_error))
         }
     }
 
@@ -138,6 +166,7 @@ class SearchMovieFragment : BaseFragment<FragmentSearchMovieBinding>(FragmentSea
     }
 
     private fun navigateToBookmarkedMovieFragment() {
-        // TODO 북마크 영화목록 화면으로 이동
+        val action = SearchMovieFragmentDirections.actionSearchMovieFragmentToBookmarkedMovieFragment()
+        findNavController().navigate(action)
     }
 }
