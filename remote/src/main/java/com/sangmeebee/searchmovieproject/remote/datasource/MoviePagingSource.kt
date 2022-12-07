@@ -31,7 +31,7 @@ internal class MoviePagingSource(
             return LoadResult.Page(
                 data = response.items.toData(),
                 prevKey = if (start == STARTING_PAGE_INDEX) null else start - pageSize,
-                nextKey = if (response.pageSize < pageSize) null else start + pageSize
+                nextKey = if (response.pageSize < pageSize || start + pageSize > LAST_PAGE_INDEX) null else start + pageSize
             )
         } catch (e: IOException) {
             // IOException for network failures.
@@ -52,6 +52,7 @@ internal class MoviePagingSource(
     }
 
     companion object {
-        const val STARTING_PAGE_INDEX = 1
+        private const val STARTING_PAGE_INDEX = 1
+        private const val LAST_PAGE_INDEX = 1000
     }
 }
