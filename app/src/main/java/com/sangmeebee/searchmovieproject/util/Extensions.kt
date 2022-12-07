@@ -1,5 +1,6 @@
 package com.sangmeebee.searchmovieproject.util
 
+import android.content.res.Resources
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.EditText
@@ -32,3 +33,6 @@ fun EditText.textChangesToFlow(): Flow<String> {
         awaitClose { removeTextChangedListener(listener) }
     }
 }
+
+val Int.pxToDp: Int
+    get() = (this * Resources.getSystem().displayMetrics.density + 0.5f).toInt()

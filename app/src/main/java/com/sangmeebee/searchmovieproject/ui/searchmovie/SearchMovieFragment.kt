@@ -2,6 +2,7 @@ package com.sangmeebee.searchmovieproject.ui.searchmovie
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
@@ -14,6 +15,7 @@ import com.sangmeebee.searchmovieproject.remote.util.HttpConnectionException
 import com.sangmeebee.searchmovieproject.ui.adapter.FooterLoadStateAdapter
 import com.sangmeebee.searchmovieproject.ui.adapter.SearchMovieAdapter
 import com.sangmeebee.searchmovieproject.ui.base.BaseFragment
+import com.sangmeebee.searchmovieproject.util.DividerDecoration
 import com.sangmeebee.searchmovieproject.util.repeatOnStarted
 import com.sangmeebee.searchmovieproject.util.textChangesToFlow
 import dagger.hilt.android.AndroidEntryPoint
@@ -54,6 +56,15 @@ class SearchMovieFragment : BaseFragment<FragmentSearchMovieBinding>(FragmentSea
     private fun setRecyclerView() {
         binding.rvMovies.apply {
             setHasFixedSize(true)
+            addItemDecoration(
+                DividerDecoration(
+                    headerPadding = 8,
+                    separatorPadding = 8,
+                    footerPadding = 20,
+                    divideHeight = 1,
+                    divideColor = ContextCompat.getColor(requireContext(), R.color.gray_300)
+                )
+            )
             adapter = movieAdapter.withLoadStateFooter(FooterLoadStateAdapter(movieAdapter::retry))
         }
     }

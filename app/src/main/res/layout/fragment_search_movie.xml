@@ -74,12 +74,19 @@
                 app:hideKeyboard="@{true}" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <include
+            android:id="@+id/include_error"
+            layout="@layout/item_error"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="@{viewModel.errorState !=null ? View.VISIBLE : View.GONE}"
+            app:layout_constraintTop_toBottomOf="@id/til_search_movie"
+            bind:errorMessage="@{viewModel.errorState}" />
+
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/srl_loading"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="8dp"
-            android:visibility="@{viewModel.errorState !=null ? View.INVISIBLE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/til_search_movie">
 
@@ -89,18 +96,10 @@
                 android:layout_height="0dp"
                 android:orientation="vertical"
                 android:paddingHorizontal="20dp"
+                android:visibility="@{viewModel.errorState !=null ? View.INVISIBLE : View.VISIBLE}"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-        <include
-            android:id="@+id/include_error"
-            layout="@layout/item_error"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:visibility="@{viewModel.errorState !=null ? View.VISIBLE : View.GONE}"
-            app:layout_constraintTop_toBottomOf="@id/til_search_movie"
-            bind:errorMessage="@{viewModel.errorState}" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
