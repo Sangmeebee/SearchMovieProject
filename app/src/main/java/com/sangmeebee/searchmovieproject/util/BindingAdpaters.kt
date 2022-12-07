@@ -6,6 +6,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.text.HtmlCompat
 import androidx.databinding.BindingAdapter
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import coil.load
 
 @BindingAdapter("imageUrl")
@@ -35,4 +36,9 @@ fun EditText.setOnEditorActionEvent(hideKeyboard: Boolean, onActionEvent: ((Stri
             else -> false
         }
     }
+}
+
+@BindingAdapter("isRefreshing")
+fun SwipeRefreshLayout.isRefreshing(isRefreshing: Boolean) {
+    this.isRefreshing = isRefreshing
 }

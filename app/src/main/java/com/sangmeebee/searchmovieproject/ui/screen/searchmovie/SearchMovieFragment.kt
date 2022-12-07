@@ -87,7 +87,7 @@ class SearchMovieFragment : BaseFragment<FragmentSearchMovieBinding>(FragmentSea
     private fun setUpObservable() {
         observeMovies()
         observeTextField()
-        setUpObserveUiState()
+        observeIsComplete()
         observePagingRefresh()
     }
 
@@ -105,17 +105,6 @@ class SearchMovieFragment : BaseFragment<FragmentSearchMovieBinding>(FragmentSea
                 .collectLatest { query ->
                     searchMovieViewModel.fetchQuery(query)
                 }
-        }
-    }
-
-    private fun setUpObserveUiState() {
-        observeIsLoading()
-        observeIsComplete()
-    }
-
-    private fun observeIsLoading() = repeatOnStarted {
-        searchMovieViewModel.uiState.map { it.isLoading }.distinctUntilChanged().collectLatest { isLoading ->
-            binding.srlLoading.isRefreshing = isLoading
         }
     }
 
