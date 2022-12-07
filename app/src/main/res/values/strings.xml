@@ -6,7 +6,7 @@
     <string name="all_unknown_error">데이터를 로드하지 못했습니다\n재시도 후 같은 문제가 반복되면\n 관리자에게 문의해주세요</string>
     <string name="all_reload">다시 시도하려면 누르세요</string>
     
-    <string name="search_movie_naver_movie_search">네이버 영화 검색</string>
+    <string name="search_movie_title">네이버 영화 검색</string>
     <string name="search_movie_director">감독: %s</string>
     <string name="search_movie_actor">출연: %s</string>
     <string name="search_movie_user_rating">평점: %s</string>

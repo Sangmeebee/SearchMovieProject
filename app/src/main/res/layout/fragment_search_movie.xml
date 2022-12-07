@@ -22,7 +22,7 @@
             android:layout_height="?attr/actionBarSize"
             android:elevation="1dp"
             app:layout_constraintTop_toTopOf="parent"
-            app:title="@string/search_movie_naver_movie_search">
+            app:title="@string/search_movie_title">
 
             <LinearLayout
                 android:id="@+id/ll_favorite"
