@@ -39,7 +39,6 @@ class MovieLocalDatasourceImplTest {
 
     @After
     fun closeDb() = database.close()
-
     @Test
     fun `저장한 데이터를 불러온다`() = runTest {
         // given
