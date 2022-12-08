@@ -8,7 +8,6 @@ class CustomWebViewClient : WebViewClient() {
     override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
         val uri = request.url
         return if (uri != null) {
-            view.scrollTo(0, 0)
             false
         } else {
             view.loadUrl(BASE_URL)
