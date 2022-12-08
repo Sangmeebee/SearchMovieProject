@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import com.sangmeebee.searchmovieproject.R
@@ -26,7 +25,6 @@ import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.distinctUntilChangedBy
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class SearchMovieFragment : BaseFragment<FragmentSearchMovieBinding>(FragmentSearchMovieBinding::inflate) {
@@ -61,7 +59,6 @@ class SearchMovieFragment : BaseFragment<FragmentSearchMovieBinding>(FragmentSea
             setHasFixedSize(true)
             addItemDecoration(
                 DividerDecoration(
-                    headerPadding = 8,
                     separatorPadding = 8,
                     footerPadding = 20,
                     divideHeight = 1,
@@ -81,6 +78,10 @@ class SearchMovieFragment : BaseFragment<FragmentSearchMovieBinding>(FragmentSea
     private fun setSwipeRefreshLayout() {
         binding.srlLoading.setOnRefreshListener {
             movieAdapter.refresh()
+            // 데이터 로드 전 swiperefreshlayout을 swipe 할 때 대응
+            if (!searchMovieViewModel.uiState.value.isLoading) {
+                binding.srlLoading.isRefreshing = false
+            }
         }
     }
 
@@ -98,7 +99,7 @@ class SearchMovieFragment : BaseFragment<FragmentSearchMovieBinding>(FragmentSea
     }
 
     @OptIn(FlowPreview::class)
-    fun observeTextField() = lifecycleScope.launch {
+    fun observeTextField() = repeatOnStarted {
         binding.tilSearchMovie.editText?.let {
             it.textChangesToFlow()
                 .debounce(DEBOUNCE_DURATION_MILLIS)
