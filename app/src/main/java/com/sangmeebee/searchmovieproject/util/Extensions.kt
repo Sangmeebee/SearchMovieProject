@@ -4,6 +4,7 @@ import android.content.res.Resources
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.EditText
+import androidx.core.text.HtmlCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
@@ -36,3 +37,6 @@ fun EditText.textChangesToFlow(): Flow<String> {
 
 val Int.pxToDp: Int
     get() = (this * Resources.getSystem().displayMetrics.density + 0.5f).toInt()
+
+fun String.removeHtmlTag(): String =
+    HtmlCompat.fromHtml(this, HtmlCompat.FROM_HTML_MODE_LEGACY).toString()
