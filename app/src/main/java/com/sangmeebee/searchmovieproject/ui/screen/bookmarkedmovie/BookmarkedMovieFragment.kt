@@ -62,6 +62,8 @@ class BookmarkedMovieFragment : BaseFragment<FragmentBookmarkedMovieBinding>(Fra
     }
 
     private fun navigateToDetailMovieFragment(movie: MovieModel) {
-        // TODO 영화 상세 화면으로 이동
+        val action =
+            BookmarkedMovieFragmentDirections.actionBookmarkedMovieFragmentToDetailMovieFragment(movie)
+        findNavController().navigate(action)
     }
 }

@@ -21,7 +21,7 @@
             android:layout_height="0dp"
             android:scaleType="centerCrop"
             app:imageUrl="@{movie.imageUrl}"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/tv_user_rating"
             app:layout_constraintDimensionRatio="H,4:3"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -33,7 +33,6 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
             app:htmlText="@{movie.title}"
-            app:layout_constrainedWidth="true"
             app:layout_constraintEnd_toStartOf="@id/iv_bookmark"
             app:layout_constraintStart_toEndOf="@id/iv_profile"
             app:layout_constraintTop_toTopOf="parent"
@@ -42,10 +41,11 @@
         <TextView
             android:id="@+id/tv_director"
             style="@style/TextView.Body.OneLine"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:text="@{@string/search_movie_director(movie.director)}"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/tv_title"
             app:layout_constraintTop_toBottomOf="@id/tv_title"
             tools:text="감독: 권경원" />
@@ -53,10 +53,11 @@
         <TextView
             android:id="@+id/tv_actor"
             style="@style/TextView.Body.OneLine"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:text="@{@string/search_movie_actor(movie.actor)}"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/tv_title"
             app:layout_constraintTop_toBottomOf="@id/tv_director"
             tools:text="출연: 강기훈" />
@@ -64,10 +65,11 @@
         <TextView
             android:id="@+id/tv_user_rating"
             style="@style/TextView.Body.OneLine"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:text="@{@string/search_movie_user_rating(movie.userRating)}"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/tv_title"
             app:layout_constraintTop_toBottomOf="@id/tv_actor"
             tools:text="평점: 8.78" />

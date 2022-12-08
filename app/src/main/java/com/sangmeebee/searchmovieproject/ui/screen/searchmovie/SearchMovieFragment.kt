@@ -152,7 +152,9 @@ class SearchMovieFragment : BaseFragment<FragmentSearchMovieBinding>(FragmentSea
     }
 
     private fun navigateToDetailMovieFragment(movie: MovieModel) {
-        // TODO 영화 상세 화면으로 이동
+        val action =
+            SearchMovieFragmentDirections.actionSearchMovieFragmentToDetailMovieFragment(movie)
+        findNavController().navigate(action)
     }
 
     private fun navigateToBookmarkedMovieFragment() {
