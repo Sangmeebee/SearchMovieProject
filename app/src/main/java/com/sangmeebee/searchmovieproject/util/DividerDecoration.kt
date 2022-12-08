@@ -16,13 +16,17 @@ class DividerDecoration(
 ) : RecyclerView.ItemDecoration() {
 
     private val mPaint: Paint = Paint().apply { color = divideColor }
-    private val mHeightDp: Int = divideHeight.pxToDp
+    private val mHeightDp: Int = divideHeight.pxToDp()
 
     override fun onDraw(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
         for (i in 0 until parent.childCount) {
             if (i < parent.childCount - 1) {
                 val view: View = parent.getChildAt(i)
-                c.drawRect(view.left.toFloat(), separatorPadding.pxToDp + view.bottom.toFloat(), view.right.toFloat(), (separatorPadding.pxToDp + view.bottom + mHeightDp).toFloat(), mPaint)
+                c.drawRect(view.left.toFloat(),
+                    separatorPadding.pxToDp() + view.bottom.toFloat(),
+                    view.right.toFloat(),
+                    (separatorPadding.pxToDp() + view.bottom + mHeightDp).toFloat(),
+                    mPaint)
             }
         }
     }
@@ -33,14 +37,14 @@ class DividerDecoration(
         val itemCount = state.itemCount
         outRect.apply {
             top = if (position == 0) {
-                headerPadding.pxToDp
+                headerPadding.pxToDp()
             } else {
-                separatorPadding.pxToDp
+                separatorPadding.pxToDp()
             }
             bottom = if (position == itemCount - 1) {
-                footerPadding.pxToDp
+                footerPadding.pxToDp()
             } else {
-                separatorPadding.pxToDp
+                separatorPadding.pxToDp()
             }
         }
     }

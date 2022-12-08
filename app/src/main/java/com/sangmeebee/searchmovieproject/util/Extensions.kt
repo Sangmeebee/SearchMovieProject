@@ -35,8 +35,8 @@ fun EditText.textChangesToFlow(): Flow<String> {
     }
 }
 
-val Int.pxToDp: Int
-    get() = (this * Resources.getSystem().displayMetrics.density + 0.5f).toInt()
+fun Int.pxToDp(): Int
+    = (this * Resources.getSystem().displayMetrics.density + 0.5f).toInt()
 
 fun String.removeHtmlTag(): String =
     HtmlCompat.fromHtml(this, HtmlCompat.FROM_HTML_MODE_LEGACY).toString()
