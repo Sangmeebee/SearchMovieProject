@@ -2,6 +2,9 @@ plugins {
     id("com.android.library")
     id("kotlin-android")
     id("kotlin-kapt")
+    id("dagger.hilt.android.plugin")
+    id("kotlin-parcelize")
+    id("androidx.navigation.safeargs.kotlin")
 }
 
 android {
@@ -29,7 +32,10 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-
+    buildFeatures {
+        viewBinding = true
+        dataBinding = true
+    }
     testOptions.unitTests {
         isIncludeAndroidResources = true
     }
@@ -38,30 +44,39 @@ android {
 dependencies {
 
     implementation(project(":domain"))
-    implementation(project(":data"))
 
-    implementation(CoroutineConfig.CORE)
-
-    RoomConfig.run {
-        implementation(ROOM_RUNTIME)
-        kapt(ROOM_COMPILER)
-        implementation(ROOM_KTX)
+    AndroidConfig.run {
+        implementation(CORE_KTX)
+        implementation(APPCOMPAT)
+        implementation(MATERIAL)
+        implementation(CONSTRAINT_LAYOUT)
+        implementation(SWIPE_REFRESH_LAYOUT)
+        implementation(FRAGMENT_KTX)
     }
 
-    implementation(ConverterConfig.GSON)
+    NavigationConfig.run {
+        implementation(FRAGMENT_KTX)
+        implementation(UI_KTX)
+    }
 
     HiltConfig.run {
         implementation(ANDROID)
         kapt(COMPILER)
     }
 
+    implementation(CoilConfig.COIL)
+
+    implementation(PagingConfig.PAGING_RUNTIME)
+
     UnitTestConfig.run {
         testImplementation(JUNIT)
-        testImplementation(ANDROIDX_JUNIT_KTX)
-        testImplementation(ANDROIDX_CORE_KTX)
-        testImplementation(ROBOLECTRIC)
         testImplementation(TRUTH)
-        testImplementation(COROUTINE_TEST)
         testImplementation(MOCKK)
+        testImplementation(COROUTINE_TEST)
+    }
+
+    UITestConfig.run {
+        androidTestImplementation(JUNIT)
+        androidTestImplementation(ESPRESSO_CORE)
     }
 }

@@ -3,8 +3,6 @@ plugins {
     id("kotlin-android")
     id("kotlin-kapt")
     id("dagger.hilt.android.plugin")
-    id("androidx.navigation.safeargs.kotlin")
-    id("kotlin-parcelize")
 }
 
 android {
@@ -16,7 +14,6 @@ android {
         targetSdk = 33
         versionCode = 1
         versionName = "1.0"
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -46,19 +43,11 @@ android {
 
 dependencies {
 
+    implementation(project(":presentation"))
     implementation(project(":domain"))
     implementation(project(":data"))
     implementation(project(":remote"))
     implementation(project(":cache"))
-
-    AndroidConfig.run {
-        implementation(CORE_KTX)
-        implementation(APPCOMPAT)
-        implementation(MATERIAL)
-        implementation(CONSTRAINT_LAYOUT)
-        implementation(SWIPE_REFRESH_LAYOUT)
-        implementation(FRAGMENT_KTX)
-    }
 
     NavigationConfig.run {
         implementation(FRAGMENT_KTX)
@@ -68,21 +57,5 @@ dependencies {
     HiltConfig.run {
         implementation(ANDROID)
         kapt(COMPILER)
-    }
-
-    implementation(CoilConfig.COIL)
-
-    implementation(PagingConfig.PAGING_RUNTIME)
-
-    UnitTestConfig.run {
-        testImplementation(JUNIT)
-        testImplementation(TRUTH)
-        testImplementation(MOCKK)
-        testImplementation(COROUTINE_TEST)
-    }
-
-    UITestConfig.run {
-        androidTestImplementation(JUNIT)
-        androidTestImplementation(ESPRESSO_CORE)
     }
 }

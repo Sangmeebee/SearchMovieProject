@@ -3,11 +3,11 @@ package com.sangmeebee.searchmovieproject.remote.datasource
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.sangmeebee.searchmovieproject.data.model.MovieEntity
+import com.sangmeebee.searchmovieproject.domain.util.EmptyQueryException
+import com.sangmeebee.searchmovieproject.domain.util.HttpConnectionException
+import com.sangmeebee.searchmovieproject.domain.util.IllegalSearchMovieException
 import com.sangmeebee.searchmovieproject.remote.model.mapper.toData
 import com.sangmeebee.searchmovieproject.remote.service.MovieApi
-import com.sangmeebee.searchmovieproject.remote.util.EmptyQueryException
-import com.sangmeebee.searchmovieproject.remote.util.HttpConnectionException
-import com.sangmeebee.searchmovieproject.remote.util.IllegalSearchMovieException
 import retrofit2.HttpException
 import java.io.IOException
 

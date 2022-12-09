@@ -3,13 +3,13 @@ package com.sangmeebee.searchmovieproject.remote.datasource
 import androidx.paging.PagingSource
 import com.google.common.truth.Truth.assertThat
 import com.sangmeebee.searchmovieproject.data.model.MovieEntity
+import com.sangmeebee.searchmovieproject.domain.util.EmptyQueryException
+import com.sangmeebee.searchmovieproject.domain.util.HttpConnectionException
+import com.sangmeebee.searchmovieproject.domain.util.IllegalSearchMovieException
 import com.sangmeebee.searchmovieproject.remote.model.MovieInfoResponse
 import com.sangmeebee.searchmovieproject.remote.model.MovieResponse
 import com.sangmeebee.searchmovieproject.remote.model.mapper.toData
 import com.sangmeebee.searchmovieproject.remote.service.MovieApi
-import com.sangmeebee.searchmovieproject.remote.util.EmptyQueryException
-import com.sangmeebee.searchmovieproject.remote.util.HttpConnectionException
-import com.sangmeebee.searchmovieproject.remote.util.IllegalSearchMovieException
 import kotlinx.coroutines.test.runTest
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
