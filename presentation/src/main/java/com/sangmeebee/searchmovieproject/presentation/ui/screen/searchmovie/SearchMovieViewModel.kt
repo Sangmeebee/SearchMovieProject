@@ -16,13 +16,13 @@ import com.sangmeebee.searchmovieproject.presentation.model.mapper.toPresentatio
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
@@ -41,14 +41,11 @@ class SearchMovieViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(SearchMovieUiState())
     val uiState = _uiState.asStateFlow()
 
-    private val query = MutableStateFlow<String?>(null)
+    private val query = MutableSharedFlow<String>()
 
     @OptIn(ExperimentalCoroutinesApi::class)
     private val searchMovies: Flow<PagingData<MovieModel>> =
         query.flatMapLatest { query ->
-            if (query == null) {
-                return@flatMapLatest emptyFlow()
-            }
             getMovieFlowUseCase(query).map { pagingData ->
                 pagingData.map { movieInfo -> movieInfo.toPresentation() }
             }
