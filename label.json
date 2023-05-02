@@ -1,0 +1,17 @@
+[
+  {
+    "name": "Answer Needed",
+    "color": "B60205",
+    "description": "리뷰반영했어요. 답변주세요."
+  },
+  {
+    "name": "Merge Needed",
+    "color": "1D76DB",
+    "description": "마지 해주세요"
+  },
+  {
+    "name": "Review Needed",
+    "color": "0E8A16",
+    "description": "리뷰가 필요해요"
+  },
+]
