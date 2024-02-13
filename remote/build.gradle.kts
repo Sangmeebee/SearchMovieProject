@@ -10,6 +10,7 @@ java {
 
 dependencies {
     implementation(project(":data"))
+    implementation(project(":domain"))
 
     implementation(CoroutineConfig.CORE)
     implementation(PagingConfig.PAGING_COMMON)

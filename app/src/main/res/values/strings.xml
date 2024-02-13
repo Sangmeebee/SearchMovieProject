@@ -1,17 +1,3 @@
 <resources>
     <string name="app_name">SearchMovieProject</string>
-
-    <string name="all_favorite">즐겨찾기</string>
-    <string name="all_network_disconnect">네트워크 연결상태를 확인해주세요</string>
-    <string name="all_unknown_error">데이터를 로드하지 못했습니다\n재시도 후 같은 문제가 반복되면\n 관리자에게 문의해주세요</string>
-    <string name="all_reload">다시 시도하려면 누르세요</string>
-
-    <string name="search_movie_title">네이버 영화 검색</string>
-    <string name="search_movie_director">감독: %s</string>
-    <string name="search_movie_actor">출연: %s</string>
-    <string name="search_movie_user_rating">평점: %s</string>
-    <string name="search_movie_empty_query">검색어를 입력해주세요</string>
-
-    <string name="bookmarked_movie_title">즐겨찾기 목록</string>
-    <string name="bookmarked_movie_error">즐겨찾기 목록을 불러오는데 실패했습니다</string>
 </resources>
